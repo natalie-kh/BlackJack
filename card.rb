@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Card
   attr_reader :name, :suit, :value
 
@@ -18,6 +20,6 @@ class Card
   end
 
   def card_view
-    "#{@name}#{@suit} "
+    "#{@suit}#{@name} "
   end
 end
