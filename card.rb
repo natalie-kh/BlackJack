@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Card
+  # think abour remove attr
   attr_reader :name, :suit, :value
 
   def initialize(name, suit)
