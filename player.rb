@@ -1,7 +1,7 @@
 class Player
   attr_accessor :name, :amount, :cards
 
-  def initialize(name, amount = 10)
+  def initialize(name, amount = 100)
     @name = name
     @amount = amount
     @cards = []
