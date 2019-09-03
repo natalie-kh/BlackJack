@@ -37,10 +37,10 @@ class Game
 
   def show_players_result(is_hidden = true, has_title = false)
     rows = []
-    rows << [@player.name.capitalize, @player.show_cards, @player.total_value]
-    rows << [@dealer.name.capitalize, @dealer.show_cards(is_hidden), @dealer.total_value(is_hidden)]
-    table = Terminal::Table.new headings: %w[Player Cards Total], rows: rows
-    table.title = hand_result if has_title
+    rows << [@player.name.capitalize, @player.show_cards, @player.total_value, @player.amount]
+    rows << [@dealer.name.capitalize, @dealer.show_cards(is_hidden), @dealer.total_value(is_hidden), @dealer.amount]
+    table = Terminal::Table.new headings: %w[Player Cards Total Balance], rows: rows
+    table.title = has_title ? hand_result : "Bank: #{@bank}"
     puts table
   end
 
