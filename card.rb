@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
 class Card
-  # think abour remove attr
   attr_reader :name, :suit, :value
 
   def initialize(name, suit)
@@ -11,7 +8,7 @@ class Card
   end
 
   def get_value(name)
-    if (2..10).include? name.to_i
+    if (2..10).cover? name.to_i
       name.to_i
     elsif name == 'A'
       11

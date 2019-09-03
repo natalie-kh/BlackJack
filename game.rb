@@ -1,13 +1,11 @@
-# frozen_string_literal: true
-
 require_relative 'helpers/with_black_jack_rules'
+require 'terminal-table'
 
 class Game
   include WithBlackJackRules
   INITIAL_BET = 10
 
-  # think abour remove attr
-  attr_accessor :player, :dealer, :bank, :players
+  attr_reader :player, :dealer, :bank, :players
 
   def initialize(user_name)
     @player = Player.new(user_name)
@@ -37,15 +35,18 @@ class Game
     @bank = INITIAL_BET * 2
   end
 
-  def show_players_result(is_hidden = true)
-    @player.profile
-    @dealer.profile(is_hidden)
+  def show_players_result(is_hidden = true, has_title = false)
+    rows = []
+    rows << [@player.name.capitalize, @player.show_cards, @player.total_value]
+    rows << [@dealer.name.capitalize, @dealer.show_cards(is_hidden), @dealer.total_value(is_hidden)]
+    table = Terminal::Table.new headings: %w[Player Cards Total], rows: rows
+    table.title = hand_result if has_title
+    puts table
   end
 
   def finish_round
     give_bank
-    show_players_result(false)
-    puts hand_result
+    show_players_result(false, true)
     continue?
   end
 
@@ -64,16 +65,16 @@ class Game
     while is_need_card
       puts "Your turn: 'h' - hit, 's' - stand"
       case gets.chomp
-        when 'h'
-          @dealer.deal_card(user)
-          return finish_round if bush? || black_jack?
+      when 'h'
+        @dealer.deal_card(user)
+        return finish_round if bush? || black_jack?
 
-          show_players_result
-        when 's'
-          puts "#{user.name.capitalize}: Stand"
-          is_need_card = false
-        else
-          puts 'Incorrect command, please use s or h!'
+        show_players_result
+      when 's'
+        puts "#{user.name.capitalize}: Stand"
+        is_need_card = false
+      else
+        puts 'Incorrect command, please use s or h!'
       end
     end
   end

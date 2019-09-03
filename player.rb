@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 class Player
   attr_accessor :name, :amount, :cards
 
-  def initialize(name, amount = 100)
+  def initialize(name, amount = 10)
     @name = name
     @amount = amount
     @cards = []
@@ -25,11 +23,11 @@ class Player
 
   def total_value(is_hidden = false)
     ace_count = @cards.count { |card| card.name == 'A' }
-    sum = @cards.each.sum { |card| card.value }
+    sum = @cards.each.sum(&:value)
 
     if sum > 21 && ace_count.positive?
       values = (0..ace_count).map { |count| sum - count * 10 }
-      sum = values.select { |val| (0..21).include? val }.max
+      sum = values.select { |val| (0..21).cover? val }.max
       sum ||= values.min
     end
     is_hidden ? @cards.last.value : sum
@@ -38,15 +36,12 @@ class Player
   def take_bank(bank)
     @amount += bank
   end
-
-  def profile(is_hidden = false)
-    print "#{@name.capitalize}: "
+  
+  def show_cards(is_hidden = false)
     if is_hidden
-      print '** ' * (@cards.size - 1) + @cards.last.card_view
+      '** ' * (@cards.size - 1) + @cards.last.card_view
     else
-      @cards.each { |card| print card.card_view }
+      @cards.map(&:card_view).join
     end
-    print "  Total: #{total_value(is_hidden)}"
-    puts "  Balance: #{@amount}"
   end
 end
