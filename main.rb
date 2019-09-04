@@ -3,14 +3,14 @@ require_relative 'deck'
 require_relative 'player'
 require_relative 'dealer'
 require_relative 'game'
+require_relative 'interface'
 
 class Main
+  attr_reader :interface
   def initialize
-    puts 'BLACK JACK'
-    puts 'Lets start! What is your name?'
-    user_name = gets.chomp
-    Game.new(user_name).new_round
+    @interface = Interface.new
   end
 end
 
-Main.new
+int = Main.new
+int.interface.start

@@ -1,14 +1,14 @@
 module WithBlackJackRules
   def bush?
-    player.total_value > 21
+    user.total_value > 21
   end
 
   def black_jack?
-    player.total_value == 21
+    user.total_value == 21
   end
 
   def push?
-    dealer.total_value == player.total_value
+    dealer.total_value == user.total_value
   end
 
   def winner

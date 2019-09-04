@@ -1,23 +1,17 @@
 class Card
   attr_reader :name, :suit, :value
 
-  def initialize(name, suit)
+  def initialize(name, suit, value)
     @name = name
     @suit = suit
-    @value = get_value(name)
-  end
-
-  def get_value(name)
-    if (2..10).cover? name.to_i
-      name.to_i
-    elsif name == 'A'
-      11
-    else
-      10
-    end
+    @value = value
   end
 
   def card_view
     "#{@suit}#{@name} "
+  end
+
+  def ace?
+    name == 'A'
   end
 end

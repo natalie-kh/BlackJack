@@ -2,7 +2,7 @@ class Player
   attr_accessor :name, :amount, :cards
 
   def initialize(name, amount = 100)
-    @name = name
+    @name = name.capitalize!
     @amount = amount
     @cards = []
   end
@@ -36,12 +36,16 @@ class Player
   def take_bank(bank)
     @amount += bank
   end
-  
+
   def show_cards(is_hidden = false)
     if is_hidden
       '** ' * (@cards.size - 1) + @cards.last.card_view
     else
       @cards.map(&:card_view).join
     end
+  end
+
+  def profile_array(is_hidden = false)
+    [name, show_cards(is_hidden), total_value(is_hidden), @amount]
   end
 end
