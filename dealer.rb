@@ -17,11 +17,12 @@ class Dealer < Player
   end
 
   def dealer_action(deck = @deck)
+    cards_count = 0
     while total_value < 17
       take_card(next_card(deck))
-      puts 'Dealer: HIT'
+      cards_count += 1
     end
-    puts 'Dealer: STAND' if total_value <= 22
+    cards_count
   end
 
   def initial_deal(users)

@@ -48,7 +48,13 @@ class Interface
         user_action
       end
     end
-    game.dealer.dealer_action
+    dealer_steps
+  end
+
+  def dealer_steps
+    additional_cards_count = game.dealer.dealer_action
+    additional_cards_count.times { puts 'Dealer: HIT' }
+    puts 'Dealer: STAND' if game.dealer.total_value < 21
   end
 
   def show_players_result(is_hidden = true, has_title = false)
