@@ -2,7 +2,7 @@ class Player
   attr_accessor :name, :amount, :cards
 
   def initialize(name, amount = 100)
-    @name = name.capitalize!
+    @name = name.capitalize
     @amount = amount
     @cards = []
   end
@@ -22,7 +22,7 @@ class Player
   end
 
   def total_value(is_hidden = false)
-    ace_count = @cards.count { |card| card.name == 'A' }
+    ace_count = @cards.count(&:ace?)
     sum = @cards.each.sum(&:value)
 
     if sum > 21 && ace_count.positive?
